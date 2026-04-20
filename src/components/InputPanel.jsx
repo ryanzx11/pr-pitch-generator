@@ -1,25 +1,23 @@
 import { useState } from 'react'
-import '../App.css'
 
-function InputPanel({ onGenerate }) {
+function InputPanel({ onGenerate, loading }) {
   const [product, setProduct] = useState('')
   const [intro, setIntro] = useState('')
   const [sellingPoints, setSellingPoints] = useState('')
-  const [style, setStyle] = useState('Formal')
-  const [loading, setLoading] = useState(false)
+  const [style, setStyle] = useState('formal')
 
-  const handleSubmit = async () => {
-    setLoading(true)
+  const handleSubmit = () => {
     const bullets = sellingPoints
       .split('\n')
       .map((line) => line.trim())
       .filter((line) => line.length > 0)
-    await onGenerate({ product, intro, bullets, style })
-    setLoading(false)
+    onGenerate({ product, intro, bullets, style })
   }
 
   return (
     <div className="input-panel">
+      <h2>Product Info</h2>
+
       <div className="form-group">
         <label htmlFor="productName">Product Name</label>
         <input
@@ -27,43 +25,47 @@ function InputPanel({ onGenerate }) {
           type="text"
           value={product}
           onChange={(e) => setProduct(e.target.value)}
-          placeholder="Enter product name"
+          placeholder="e.g. Govee TV Backlight 3 Pro"
+          disabled={loading}
         />
       </div>
 
       <div className="form-group">
-        <label htmlFor="briefIntro">Brief Intro</label>
+        <label htmlFor="briefIntro">Brief Introduction</label>
         <textarea
           id="briefIntro"
           value={intro}
           onChange={(e) => setIntro(e.target.value)}
-          placeholder="Enter brief introduction"
-          rows={3}
+          placeholder="One sentence description of the product"
+          rows={2}
+          disabled={loading}
         />
       </div>
 
       <div className="form-group">
-        <label htmlFor="sellingPoints">Selling Points</label>
+        <label htmlFor="sellingPoints">Key Selling Points</label>
         <textarea
           id="sellingPoints"
           value={sellingPoints}
           onChange={(e) => setSellingPoints(e.target.value)}
-          placeholder="Enter one bullet per line"
+          placeholder="One bullet per line&#10;RGBIC tech with 16M colors&#10;AI music sync&#10;CES 2026 Award"
           rows={5}
+          disabled={loading}
         />
       </div>
 
       <div className="form-group">
-        <label>Style</label>
+        <label>Email Style</label>
         <div className="style-selector">
-          {['Formal', 'Friendly', 'Concise'].map((s) => (
+          {['formal', 'friendly', 'concise'].map((s) => (
             <button
               key={s}
               type="button"
               className={`style-btn ${style === s ? 'active' : ''}`}
               onClick={() => setStyle(s)}
+              disabled={loading}
             >
-              {s}
+              {s.charAt(0).toUpperCase() + s.slice(1)}
             </button>
           ))}
         </div>
@@ -75,7 +77,14 @@ function InputPanel({ onGenerate }) {
         onClick={handleSubmit}
         disabled={loading}
       >
-        {loading ? 'Generating...' : 'Generate Pitch'}
+        {loading ? (
+          <>
+            <span className="spinner"></span>
+            Generating...
+          </>
+        ) : (
+          'Generate Pitch'
+        )}
       </button>
     </div>
   )

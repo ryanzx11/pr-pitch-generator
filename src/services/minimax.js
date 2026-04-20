@@ -1,5 +1,5 @@
 const API_KEY = import.meta.env.VITE_MINIMAX_API_KEY;
-const API_URL = 'https://api.minimax.chat/v1/text/chatcompletion_pro';
+const API_URL = 'https://openrouter.ai/api/v1/chat/completions';
 
 export async function generatePitch({ product, intro, bullets, style }) {
   const styleDescriptions = {
@@ -39,16 +39,21 @@ Subject: [your subject line here]
       'Authorization': `Bearer ${API_KEY}`
     },
     body: JSON.stringify({
-      model: 'MiniMax-Text-01',
+      model: 'anthropic/claude-3-haiku',
       messages: [{ role: 'user', content: prompt }],
       temperature: 0.7
     })
   });
 
-  if (!response.ok) throw new Error(`API error: ${response.status}`);
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`API error: ${response.status} - ${errorText}`);
+  }
 
   const data = await response.json();
+  console.log('API Response:', JSON.stringify(data, null, 2));
   const text = data.choices?.[0]?.message?.content || '';
+  console.log('Parsed text:', text);
 
   // Parse subject and body
   const subjectMatch = text.match(/^Subject:\s*(.+)$/m);
