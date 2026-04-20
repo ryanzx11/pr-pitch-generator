@@ -1,0 +1,35 @@
+<h2>AI PR Pitch Generator — Layout</h2>
+<p class="subtitle">左侧输入表单 + 右侧预览，上下底部历史记录</p>
+
+<div class="mockup">
+  <div class="mockup-header">App Layout</div>
+  <div class="mockup-body">
+    <div style="display: flex; height: 70vh; gap: 12px; padding: 12px; background: #f5f5f5;">
+      <div style="flex: 1; background: white; border-radius: 8px; padding: 16px; display: flex; flex-direction: column; gap: 12px;">
+        <div style="background: #e8f0fe; height: 30px; border-radius: 4px;"></div>
+        <div style="background: #e8f0fe; height: 20px; width: 60%; border-radius: 4px;"></div>
+        <div style="background: #f0f0f0; height: 40px; border-radius: 4px;"></div>
+        <div style="background: #f0f0f0; height: 40px; border-radius: 4px;"></div>
+        <div style="background: #f0f0f0; height: 40px; border-radius: 4px;"></div>
+        <div style="background: #0d6efd; height: 36px; border-radius: 4px; margin-top: auto;"></div>
+      </div>
+      <div style="flex: 1; background: white; border-radius: 8px; padding: 16px; display: flex; flex-direction: column;">
+        <div style="font-weight: bold; margin-bottom: 12px; color: #333;">Email Preview</div>
+        <div style="background: #fafafa; flex: 1; border-radius: 4px; border: 1px solid #eee;"></div>
+      </div>
+    </div>
+    <div style="background: #333; color: white; padding: 12px 16px; font-size: 12px;">
+      History Bar — recent pitches
+    </div>
+  </div>
+</div>
+
+<div class="options">
+  <div class="option" data-choice="horizontal" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Horizontal Split</h3>
+      <p>Left: form inputs | Right: live email preview | Bottom: history strip</p>
+    </div>
+  </div>
+</div>
